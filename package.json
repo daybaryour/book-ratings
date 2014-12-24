@@ -1,0 +1,22 @@
+{
+  "name": "book-ratings",
+  "version": "0.0.0",
+  "description": "book rater",
+  "main": "app.js",
+  "scripts": {
+    "test": "hello world"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/daybaryour/book-ratings.git"
+  },
+  "author": "debaryour@gmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/daybaryour/book-ratings/issues"
+  },
+  "homepage": "https://github.com/daybaryour/book-ratings",
+  "dependencies": {
+    "firebase": "^2.0.6"
+  }
+}

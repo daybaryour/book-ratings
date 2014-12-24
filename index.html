@@ -1,0 +1,78 @@
+<html>
+  <head>
+
+	<!-- CSS Includes -->	   
+   	<link rel="stylesheet" type="text/css" href="assets/css/vendor/bootstrap.min.css"/>
+   	<link rel="stylesheet" type="text/css" href="assets/css/vendor/bootstrap-theme.min.css"/>
+   	<link rel="stylesheet" type="text/css" href="assets/css/vendor/star-rating.css"/> 
+    <link rel="stylesheet" type="text/css" href="assets/css/app.css"/>
+   
+  </head>
+  <body ng-app="myBookRatingApp">
+  	<div class="container" ng-controller="bookCtrl">
+		<div class="header">
+			<ul class="nav nav-pills pull-right">			  
+			  <li class="" ng-click="new_rateUid()"><a href="#">Rate as another User</a></li>
+			  <li class="active"><a href="#">Rate UID: {{access}}</a></li>
+			</ul>
+			<h3 class="text-muted">Book Ratings App</h3>
+		</div>
+			<!-- form to add new books -->
+        <div class="jumbotron">
+	        <h1>Add New Books</h1>
+	        <form class="row">
+	        	<div class="col-md-5">
+	        		<input type="text" class="form-control" ng-model="bookName" placeholder="Enter Book Name... " autofocus="true"/>
+	        	</div>
+	        	<div class="col-md-5">
+	        		<input type="text" class="form-control" ng-model="bookCat" placeholder="Enter Book Category... " autofocus="true"/>
+	        	</div>
+		        <div class="col-md-2">
+	        		<input type="submit" value="Submit" class="btn btn-sm btn-success add_book_btn" ng-click="addBooks()" />
+	        	</div>
+        	</form>
+        </div>
+        <div class="row">
+	        	<table class="table table-striped">
+		            <thead>
+		              <tr>
+		                <th>#</th>
+		                <th>Book Name</th>
+		                <th>Book Category</th>
+		                <th>Rate Book</th>
+		                <th>Avg Rating</th>
+		                <th></th>
+		              </tr>
+		            </thead>
+		            <!-- Book list looped with ng-repeat -->
+		            <tbody>
+		            	<tr ng-repeat="(id, book) in books">
+		            		<td>{{$index}}</td>
+		            		<td>{{book.name}}</td>
+		            		<td>{{book.category}}</td>
+		            		<!--<td><input id="input-22" class="rating" ng-model="book.bookrating" type="number" data-glyphicon=0 data-container-class='false' data-size="xs" data-step=1  /> </td>-->
+		            		<td> {{book.bookrating}}<input style="width:80%;float:left" id="input-22" class="rater" ng-model=book.bookrating type="range" min=0 max=5 ng-mouseup="updatebook(id, book.bookrating, book.$id)"  /> </td>
+		            		 <td style="text-align:center">{{book.avgrating/book.timesrated | number : 0}} Stars</td>
+		            		<td><a href="" class="btn btn-xs" ng-click="deleteBook(id)">Delete</a></td>
+		            	</tr>
+		            </tbody>
+	          </table>
+	        </div>
+	        <div class="footer">
+	      		<p>&copy; Company 2014</p>
+	        </div>
+    	</div>
+
+  	</div>
+  	<script src="assets/js/jquery.min.js"></script>
+
+	
+  	<script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.17/angular.min.js'></script>
+    <script src='https://cdn.firebase.com/js/client/2.0.4/firebase.js'></script>
+    
+  	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.17/angular-cookies.js"></script>
+	<script src='https://cdn.firebase.com/libs/angularfire/0.8.0/angularfire.min.js'></script>
+	<script type="text/javascript" src="assets/js/vendor/star-rating.min.js"></script>
+  	<script src="assets/js/app.js"></script>
+  </body>
+</html>
