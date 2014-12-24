@@ -1,3 +1,6 @@
+/**
+* app.js
+*/
 var myApp = angular.module("myBookRatingApp", ['firebase','ngCookies']);
 
 /*myApp.config(['$routeProvider',function($routeProvider) {
@@ -9,17 +12,19 @@ var myApp = angular.module("myBookRatingApp", ['firebase','ngCookies']);
     .otherwise({redirectTo: '/'})
 }]);*/
 
+//declaring angular comtroller and adding dependencies
 myApp.controller('bookCtrl', ['$scope', '$firebase', '$cookies',
     function($scope, $firebase, $cookies) {
         var ref = new Firebase("https://booklistapp.firebaseio.com/booklist");
         $scope.books = $firebase(ref).$asArray();
         
-        //$cookieStore.put('access', get_random_no());
+        //taking advantage of html5 local storage for saving user's unique id
         if (!localStorage.user_access) {
             localStorage.user_access = get_random_no();
         } 
         var accessMod = $scope.access = localStorage.user_access;
         
+        //adding new books function
         $scope.addBooks = function() {
             if(!$scope.bookName || !$scope.bookCat) return;
             var name = $scope.bookName;
@@ -29,10 +34,12 @@ myApp.controller('bookCtrl', ['$scope', '$firebase', '$cookies',
             
         };
 
+        //delete a book all users have read write access
         $scope.deleteBook = function(id) {
             $scope.books.$remove(id);
         };
 
+        //update books disable when book has been rated
         $scope.updatebook = function(id, rating, key) {
             
             var avgrate = $scope.books.$getRecord(key);
@@ -50,6 +57,7 @@ myApp.controller('bookCtrl', ['$scope', '$firebase', '$cookies',
             
         }
 
+        //clears everthing in local storage (user access)
         $scope.new_rateUid = function() {
             localStorage.clear();
             localStorage.user_access = get_random_no();
@@ -62,7 +70,6 @@ myApp.controller('bookCtrl', ['$scope', '$firebase', '$cookies',
                 var newRef = new Firebase("https://booklistapp.firebaseio.com/booklist/"+id).update({bookrating:0});
             }
             
-            //console.log()
         }
     }
 ]);
@@ -73,11 +80,11 @@ function get_average_rating(oldrating, newrating) {
 }
 
 function get_random_no() {
-    return(Math.floor(100000 + Math.random() * 900000));
+    return(Math.floor(100000 + Math.random() * 900000)); //dont ever use in production
 }
 
 function disable_ratings() {
-    $(".rater").addClass("hide") ;
+    //$(".rater").addClass("hide") ;
 }
 
 /** Start jQuery :) **/
